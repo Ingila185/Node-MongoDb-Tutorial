@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 
 var corsOptions = {
-  origin: "http://localhost:8081"
+  origin: "http://localhost:8080"
 };
 
 app.use(cors(corsOptions));
@@ -14,6 +14,12 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+//Add CORS header to every response
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:4200');
+  next();
+});
 
 const db = require("./app/models");
 db.mongoose
